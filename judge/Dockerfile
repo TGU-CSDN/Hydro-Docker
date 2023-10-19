@@ -29,7 +29,7 @@ RUN if [[ -n "$USE_MIRROR" ]] ; then nix-channel --add https://mirrors.bfsu.edu.
 
 RUN nix-channel --update
 
-RUN if [[ -z "$USE_MIRROR" ]] ; then npm config set registry https://registry.npmmirror.com ; fi
+RUN if [[ -z "$USE_MIRROR" ]] ; then yarn config set registry https://registry.npmmirror.com/ ; fi
 
 # Build rootfs
 WORKDIR /nix_build
@@ -49,7 +49,7 @@ ADD ./runtime/config/mount.yaml /tmp/.hydro/mount.yaml
 RUN chmod +x /root/run-sandbox.sh
 RUN chmod +x /root/entrypoint.sh
 
-RUN npm i -g pm2 @hydrooj/hydrojudge
+RUN yarn global add pm2 @hydrooj/hydrojudge
 RUN wget ${GO_JUDGE_URL} -O /usr/bin/sandbox && \
     chmod +x /usr/bin/sandbox
 

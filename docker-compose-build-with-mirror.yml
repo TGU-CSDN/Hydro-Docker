@@ -1,0 +1,47 @@
+services:
+  # Warning: mongodb here is not password-protected.
+  # DO NOT EXPOSE THIS SERVICE TO THE PUBLIC.
+  oj-mongo:
+    image: mongo:4
+    container_name: oj-mongo
+    restart: always
+    volumes:
+      - ./data/mongo:/data/db
+
+  oj-backend:
+    build: 
+      context: ./backend
+      args:
+        - USE_MIRROR=1
+    container_name: oj-backend
+    restart: always
+    depends_on:
+      - oj-mongo
+    volumes:
+      - ./data/file:/data/file
+      - ./data/backend:/root/.hydro
+    ports:
+      - "80:8888"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+      start_interval: 5s
+
+  oj-judge:
+    build:
+      context: ./judge
+      args:
+        - USE_MIRROR=1
+        - NIX_INSTALLER_URL=https://mirrors.bfsu.edu.cn/nix/latest/install
+        - GO_JUDGE_URL=https://ghproxy.com/https://github.com/criyle/go-judge/releases/download/v1.6.10/executorserver_1.6.10_linux_amd64
+    restart: always
+    privileged: true
+    shm_size: '2gb'
+    depends_on:
+      oj-backend:
+        condition: service_healthy
+    volumes:
+      - ./data/judge:/root/.hydro

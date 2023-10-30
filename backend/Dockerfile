@@ -9,7 +9,7 @@ ENV SHELL=/bin/bash
 
 ADD ./entrypoint.sh /root/entrypoint.sh
 
-RUN if [[ -z "$USE_MIRROR" ]] ; then yarn config set registry https://registry.npmmirror.com/ ; fi
+RUN if [[ -n "$USE_MIRROR" ]] ; then echo $USE_MIRROR && exit 1 ; fi
 
 RUN yarn global add pm2 hydrooj @hydrooj/ui-default
 

@@ -29,7 +29,7 @@ RUN if [[ -n "$USE_MIRROR" ]] ; then nix-channel --add https://mirrors.bfsu.edu.
 
 RUN nix-channel --update
 
-RUN if [[ -z "$USE_MIRROR" ]] ; then yarn config set registry https://registry.npmmirror.com/ ; fi
+RUN if [[ -n "$USE_MIRROR" ]] ; then yarn config set registry https://registry.npmmirror.com/ ; fi
 
 # syntax=docker/dockerfile:1
 

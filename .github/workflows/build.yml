@@ -58,7 +58,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ${{ env.BUILD_CONTEXT }}
-          file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
@@ -115,7 +114,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ${{ env.BUILD_CONTEXT }}
-          file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}

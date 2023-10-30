@@ -31,6 +31,8 @@ RUN nix-channel --update
 
 RUN if [[ -z "$USE_MIRROR" ]] ; then yarn config set registry https://registry.npmmirror.com/ ; fi
 
+# syntax=docker/dockerfile:1
+
 # Build rootfs
 WORKDIR /nix_build
 

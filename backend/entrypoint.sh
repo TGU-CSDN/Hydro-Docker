@@ -7,11 +7,11 @@ if [ ! -f "$ROOT/addon.json" ]; then
 fi
 
 if [ ! -f "$ROOT/config.json" ]; then
-    echo '{"host": "oj-mongo", "port": "27017", "name": "hydro", "username": "", "password": ""}' > "$ROOT/config.json"
+    echo "{\"host\": \"$OJ_DB_HOST\", \"port\": \"$OJ_DB_PORT\", \"name\": \"$OJ_DB_NAME\", \"username\": \"$OJ_DB_USERNAME\", \"password\": \"$OJ_DB_PASSWORD\"}" > "$ROOT/config.json"
 fi
 
-if [ ! -f "$ROOT/first" ]; then
-    echo "for marking use only!" > "$ROOT/first"
+if [ ! -f "$ROOT/.install.lock" ]; then
+    echo "INSTALL LOCK FILE DO NOT REMOVE IT" > "$ROOT/.install.lock"
 
     hydrooj cli user create systemjudge@systemjudge.local root rootroot 2
     hydrooj cli user setSuperAdmin 2

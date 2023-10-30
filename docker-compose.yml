@@ -17,15 +17,12 @@ services:
     volumes:
       - ./data/file:/data/file
       - ./data/backend:/root/.hydro
+    environment:
+      - OJ_DB_HOST=oj-mongo
+      - OJ_DB_PORT=27017
+      - OJ_DB_NAME=hydro
     ports:
       - "80:8888"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8888"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
-      start_interval: 5s
 
   oj-judge:
     build: ./judge

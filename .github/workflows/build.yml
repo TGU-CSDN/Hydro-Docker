@@ -19,7 +19,7 @@ jobs:
       packages: write
       contents: read
     env:
-      IMAGE_NAME: TGU-CSDN/hydrooj-backend
+      IMAGE_NAME: tgu-csdn/hydrooj-backend
       BUILD_CONTEXT: ./backend
 
     steps:
@@ -75,7 +75,7 @@ jobs:
       packages: write
       contents: read
     env:
-      IMAGE_NAME: TGU-CSDN/hydrooj-judge
+      IMAGE_NAME: tgu-csdn/hydrooj-judge
       BUILD_CONTEXT: ./judge
 
     steps:

@@ -40,8 +40,6 @@ COPY hydro-nix-channel .
 
 RUN nix-build --attr judge
 
-RUN ln -sf result /root/.nix-profile
-
 # Init Judge
 RUN mkdir -p /root/.hydro
 ADD ./runtime/scripts/entrypoint.sh /root/entrypoint.sh

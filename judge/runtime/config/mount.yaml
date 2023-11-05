@@ -1,23 +1,23 @@
 mount:
   # Basic binaries and libraries
   - type: bind
-    source: /root/.nix-profile/bin
+    source: /nix_build/result/bin
     target: /bin
     readonly: true
   - type: bind
-    source: /root/.nix-profile/bin
+    source: /nix_build/result/bin
     target: /usr/bin
     readonly: true
   - type: bind
-    source: /root/.nix-profile/lib
+    source: /nix_build/result/lib
     target: /lib
     readonly: true
   - type: bind
-    source: /root/.nix-profile/share
+    source: /nix_build/result/share
     target: /share
     readonly: true
   - type: bind
-    source: /root/.nix-profile/etc
+    source: /nix_build/result/etc
     target: /etc
     readonly: true
   - type: bind

@@ -3,7 +3,7 @@ services:
   # DO NOT EXPOSE THIS SERVICE TO THE PUBLIC.
   oj-mongo:
     image: mongo:4
-    container_name: oj-mongo
+    container_name: hydrooj-mongo
     restart: always
     volumes:
       - ./data/mongo:/data/db
@@ -13,7 +13,7 @@ services:
       context: ./backend
       args:
         - USE_MIRROR=1
-    container_name: oj-backend
+    container_name: hydrooj-backend
     restart: always
     depends_on:
       - oj-mongo
@@ -33,7 +33,7 @@ services:
       args:
         - USE_MIRROR=1
         - NIX_INSTALLER_URL=https://mirrors.bfsu.edu.cn/nix/latest/install
-        - GO_JUDGE_URL=https://ghproxy.com/https://github.com/criyle/go-judge/releases/download/v1.6.10/executorserver_1.6.10_linux_amd64
+    container_name: hydrooj-judge
     restart: always
     privileged: true
     shm_size: '2gb'

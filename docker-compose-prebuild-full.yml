@@ -3,14 +3,14 @@ services:
   # DO NOT EXPOSE THIS SERVICE TO THE PUBLIC.
   oj-mongo:
     image: mongo:4
-    container_name: oj-mongo
+    container_name: hydrooj-mongo
     restart: always
     volumes:
       - ./data/mongo:/data/db
 
   oj-backend:
-    image: hydrooj/backend
-    container_name: oj-backend
+    image: ghcr.io/tgu-csdn/hydrooj-backend
+    container_name: hydrooj-backend
     depends_on:
       - oj-mongo
     volumes:
@@ -24,7 +24,8 @@ services:
       - "80:8888"
 
   oj-judge:
-    image: hydrooj/judge
+    image: ghcr.io/tgu-csdn/hydrooj-judge
+    container_name: hydrooj-judge
     privileged: true
     shm_size: '2gb'
     depends_on:

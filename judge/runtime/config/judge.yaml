@@ -1,5 +1,6 @@
 hosts:
   localhost:
+    host: oj-backend
     type: hydro
     server_url: http://oj-backend:8888/
     uname: root

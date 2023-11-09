@@ -4,7 +4,7 @@
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/TGU-CSDN/Hydro-Docker/build.yml?branch=main)
 
-[English](./README.md) / [中文](./README-ZH.md)
+[English](./README.MD) / [中文](./README-ZH.MD)
 
 ## Usage
 

@@ -11,6 +11,7 @@ services:
   oj-backend:
     image: ghcr.io/tgu-csdn/hydrooj-backend
     container_name: hydrooj-backend
+    restart: always
     depends_on:
       - oj-mongo
     volumes:
@@ -26,6 +27,7 @@ services:
   oj-judge:
     image: ghcr.io/tgu-csdn/hydrooj-judge
     container_name: hydrooj-judge
+    restart: always
     privileged: true
     shm_size: '2gb'
     depends_on:

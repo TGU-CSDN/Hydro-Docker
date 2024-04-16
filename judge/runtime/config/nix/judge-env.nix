@@ -9,5 +9,8 @@ let
 
 in buildEnv {
   name = "judge-env";
-  paths = [ hydro.judge hydro.sandbox ];
+  paths = [ hydro.judge pkgs.go-judge ];
+  postBuild = ''
+    ln -sf $(which go-judge) /usr/local/bin/hydro-sandbox
+  '';
 }

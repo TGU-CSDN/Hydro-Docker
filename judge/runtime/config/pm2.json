@@ -3,7 +3,10 @@
     {
       "name": "hydro-sandbox",
       "script": "bash",
-      "args": ["-c", "ulimit -s unlimited && /nix_build/result/bin/hydro-sandbox -mount-conf /root/.hydro/mount.yaml -http-addr=localhost:5050"],
+      "args": [
+        "-c",
+        "ulimit -s unlimited && /usr/local/bin/hydro-sandbox -mount-conf /root/.hydro/mount.yaml -http-addr=localhost:5050"
+      ],
       "autorestart": true
     },
     {

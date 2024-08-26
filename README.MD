@@ -10,13 +10,13 @@
 
 ### Deployment
 
-There are two ways to deploy the services. We highly recommend using the prebuilt Docker image if you have a server with an arm64 architecture.
+There are two ways to deploy the services. We highly recommend using the prebuilt Docker image if you have a server with an amd64 architecture.
 
 Before you start, make sure you have Docker with Docker Compose installed.
 
 #### Choice 1: Use Prebuilt Docker Images (Recommended)
 
-⚠️ The precompiled image only supports environments with the arm64 architecture. If you wish to run it on other architectures, please refer to the section "Using Locally Compiled Images."
+⚠️ The precompiled image only supports environments with the amd64 architecture. If you wish to run it on other architectures, please refer to the section "Using Locally Compiled Images."
 
 1. Download the example compose file (prebuilt version) and name it `docker-compose.yml`
 

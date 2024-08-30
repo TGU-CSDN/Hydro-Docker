@@ -80,12 +80,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Inspect image
-        if: ${{ github.event_name != 'pull_request' }}
-        run: |
-          docker buildx imagetools inspect \
-          ${{ steps.docker_build.outputs.imageid }}
-
   build-and-push-judge:
     runs-on: ubuntu-latest
     permissions:
@@ -148,9 +142,3 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Inspect image
-        if: ${{ github.event_name != 'pull_request' }}
-        run: |
-          docker buildx imagetools inspect \
-          ${{ steps.docker_build.outputs.imageid }}

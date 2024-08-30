@@ -5,12 +5,16 @@ on:
   push:
     branches:
       - main
+      - dev
     tags:
       - v*
   pull_request:
 
 env:
-  REGISTRY: ghcr.io
+  REGISTRY_GHCR: ghcr.io
+  TAG_PREFIX_GHCR: tgu-csdn
+  REGISTRY_CODING: tgucsdn-docker.pkg.coding.net
+  TAG_PREFIX_CODING: hydro-docker/hydro
 
 jobs:
   build-and-push-backend:
@@ -19,7 +23,7 @@ jobs:
       packages: write
       contents: read
     env:
-      IMAGE_NAME: tgu-csdn/hydrooj-backend
+      IMAGE_NAME: hydrooj-backend
       BUILD_CONTEXT: ./backend
 
     steps:
@@ -43,21 +47,31 @@ jobs:
           echo "Flags:     ${{ steps.buildx.outputs.flags }}"
           echo "Platforms: ${{ steps.buildx.outputs.platforms }}"
 
-      - name: Log in to the Container registry
+      - name: Log in to the GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ${{ env.REGISTRY_GHCR }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log in to the Coding.net registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY_CODING }}
+          username: ${{ secrets.CODING_DOCKER_USERNAME }}
+          password: ${{ secrets.CODING_DOCKER_PASSWORD }}
 
       - name: Extract metadata for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: |
+            ${{ env.REGISTRY_GHCR }}/${{ env.TAG_PREFIX_GHCR }}/${{ env.IMAGE_NAME }}
+            ${{ env.REGISTRY_CODING }}/${{ env.TAG_PREFIX_CODING }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push
-        uses: docker/build-push-action@v5
+        id: docker_build
+        uses: docker/build-push-action@v6
         with:
           context: ${{ env.BUILD_CONTEXT }}
           builder: ${{ steps.buildx.outputs.name }}
@@ -66,19 +80,13 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Inspect image
-        if: ${{ github.event_name != 'pull_request' }}
-        run: |
-          docker buildx imagetools inspect \
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
-
   build-and-push-judge:
     runs-on: ubuntu-latest
     permissions:
       packages: write
       contents: read
     env:
-      IMAGE_NAME: tgu-csdn/hydrooj-judge
+      IMAGE_NAME: hydrooj-judge
       BUILD_CONTEXT: ./judge
 
     steps:
@@ -102,21 +110,31 @@ jobs:
           echo "Flags:     ${{ steps.buildx.outputs.flags }}"
           echo "Platforms: ${{ steps.buildx.outputs.platforms }}"
 
-      - name: Log in to the Container registry
+      - name: Log in to the GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ${{ env.REGISTRY_GHCR }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log in to the Coding.net registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY_CODING }}
+          username: ${{ secrets.CODING_DOCKER_USERNAME }}
+          password: ${{ secrets.CODING_DOCKER_PASSWORD }}
 
       - name: Extract metadata for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: |
+            ${{ env.REGISTRY_GHCR }}/${{ env.TAG_PREFIX_GHCR }}/${{ env.IMAGE_NAME }}
+            ${{ env.REGISTRY_CODING }}/${{ env.TAG_PREFIX_CODING }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push
-        uses: docker/build-push-action@v5
+        id: docker_build
+        uses: docker/build-push-action@v6
         with:
           context: ${{ env.BUILD_CONTEXT }}
           builder: ${{ steps.buildx.outputs.name }}
@@ -124,9 +142,3 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Inspect image
-        if: ${{ github.event_name != 'pull_request' }}
-        run: |
-          docker buildx imagetools inspect \
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}

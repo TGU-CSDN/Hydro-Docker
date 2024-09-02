@@ -24,7 +24,11 @@
     wget -c "https://raw.githubusercontent.com/TGU-CSDN/Hydro-Docker/main/docker-compose-prebuilt-full.yml" -O docker-compose.yml
     ```
 
-    对于中国大陆的用户，在访问 [ghcr.io](https://ghcr.io) 时可能会遇到网络问题。请考虑使用镜像源，例如 [DaoCloud](https://github.com/DaoCloud/public-image-mirror)。
+    对于中国大陆的用户，在访问 [ghcr.io](https://ghcr.io) 时可能会遇到网络问题。为此，我们准备了经过镜像加速的 compose 文件。你可以使用下面的命令替代：
+
+    ```shell
+    wget -c "https://raw.githubusercontent.com/TGU-CSDN/Hydro-Docker/main/docker-compose-prebuilt-full-china-mirrored.yml" -O docker-compose.yml
+    ```
 
 2. 启动容器
 

@@ -24,7 +24,11 @@ Before you start, make sure you have Docker with Docker Compose installed.
     wget -c "https://raw.githubusercontent.com/TGU-CSDN/Hydro-Docker/main/docker-compose-prebuilt-full.yml" -O docker-compose.yml
     ```
 
-    For Chinese users, you may encounter network connection issues to [ghcr.io](https://ghcr.io). You can use a Docker mirror like [DaoCloud](https://github.com/DaoCloud/public-image-mirror).
+    For users in China, you may encounter network problems when accessing [ghcr.io](https://ghcr.io). To solve this problem, we have prepared a compose file with mirrored acceleration. You can replace the above command with the following one:
+
+    ```shell
+    wget -c "https://raw.githubusercontent.com/TGU-CSDN/Hydro-Docker/main/docker-compose-prebuilt-full-china-mirrored.yml" -O docker-compose.yml
+    ```
 
 2. Start containers
 

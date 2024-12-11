@@ -12,7 +12,8 @@ ARG USE_MIRROR
 ARG NIX_INSTALLER_URL=https://nixos.org/nix/install
 
 # Set up environment
-ADD ./runtime/config/nix /tmp/nix_config
+ADD ./nix-build-config /tmp/nix_config
+ADD ./hydro-nix-channel /tmp/hydro-nix-channel
 ADD ${NIX_INSTALLER_URL} /tmp/install_nix
 
 RUN if [[ -n "$USE_MIRROR" ]] ; then \
@@ -26,8 +27,6 @@ ENV NIXPKGS_ALLOW_INSECURE=1
 
 RUN if [[ -n "$USE_MIRROR" ]] ; then mv /tmp/nix_config/nix.cn.conf /etc/nix/nix.conf ; else mv /tmp/nix_config/nix.conf /etc/nix/nix.conf ; fi
 RUN if [[ -n "$USE_MIRROR" ]] ; then nix-channel --add https://mirrors.bfsu.edu.cn/nix-channels/nixpkgs-unstable nixpkgs ; fi
-
-RUN nix-channel --add https://nix-channel.hydro.ac/ hydro
 
 RUN nix-channel --update
 

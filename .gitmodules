@@ -1,0 +1,3 @@
+[submodule "judge/hydro-nix-channel"]
+	path = judge/hydro-nix-channel
+	url = https://github.com/hydro-dev/nix-channel.git
